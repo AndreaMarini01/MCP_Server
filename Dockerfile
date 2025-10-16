@@ -1,0 +1,22 @@
+FROM python:3.11-slim
+
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpq-dev \
+    git \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Install huggingface_hub (se non già in requirements)
+RUN pip install --no-cache-dir huggingface_hub
+
+COPY . .
+
+EXPOSE 8000
+
+CMD ["python"]

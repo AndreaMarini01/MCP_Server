@@ -1,0 +1,36 @@
+# --- Python environment ---
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+*.log
+
+# --- IDE / JetBrains ---
+.idea/
+*.iml
+
+# --- Environment variables ---
+.env
+
+# --- Data, cache e file generati ---
+*.json
+*.xml
+schema.index
+
+# --- System files ---
+.DS_Store
+Thumbs.db
+
+# --- Build / output ---
+dist/
+build/
+*.egg-info/
+
+# --- Docker cache ---
+*.pid
+*.tar
+*.img
+*.bak
+*.log

@@ -1,0 +1,43 @@
+services:
+  backend:
+    build: .
+    container_name: llm-postgres-mcp
+    env_file:
+      - .env
+    ports:
+      - "58000:8000"
+    volumes:
+      - .:/app
+      - models_cache:/app/models
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      OLLAMA_HOST: http://ollama:11434
+      OLLAMA_MODEL: llama3.2:3b
+    depends_on:
+      - ollama
+    networks:
+      - bros_net
+    command: ["python", "mcp_server.py"]
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - bros_net
+    command: serve
+
+volumes:
+  ollama_data:
+  models_cache:
+
+networks:
+  bros_net:
+    driver: bridge
